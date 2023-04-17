@@ -1,0 +1,77 @@
+.query_message_loading {
+    padding: 1.5rem;
+    color: #ececf1;
+    background: linear-gradient(to left, #070809, #1a1c20, #070809);
+    background-size: 200% 200%;
+    background-position: -100% 0;
+    animation: loading-gradient 2s ease-in-out infinite;
+    animation-direction: alternate;
+    animation-name: loading-gradient;
+}
+
+@keyframes loading-gradient {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+.query_message {
+    background: #070809;
+    padding: 1.5rem;
+    color: #ececf1;
+}
+
+.response_message {
+    background: #141619;
+    padding: 1.5rem;
+    color: #ececf1;
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.response_message,
+.query_message,
+.query_message_loading {
+    display: flex;
+}
+
+.markdown_output {
+    line-height: 1.75;
+}
+
+.markdown_output a:hover {
+    opacity: 0.8;
+}
+
+.markdown_output a {
+    color: #16bed7;
+    font-weight: 500;
+}
+
+.markdown_output code {
+    color: #15cb19;
+    font-weight: 500;
+    white-space: pre-wrap !important;
+}
+
+.markdown_output ol,
+.markdown_output ul {
+    margin: 1rem;
+}
+
+.markdown_output h1,
+.markdown_output h2,
+.markdown_output h3 {
+    font-size: inherit;
+}
