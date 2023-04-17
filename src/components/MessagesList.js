@@ -4,11 +4,11 @@ import styles from "@/styles/MessagesList.module.css";
 
 const MessagesList = ({ messages, messageListRef, loading }) => {
     // function to help select styling class
-    const _styleHelper = (msg, idx) => {
-        if (msg.type === "query" && loading && idx === msg.length - 1) {
+    const _styleHelper = (messageType, numMessages, idx) => {
+        if (messageType === "query" && loading && idx === numMessages - 1) {
             return styles.query_message_loading;
         } else {
-            if (msg.type === "response") {
+            if (messageType === "response") {
                 return styles.response_message;
             } else {
                 return styles.query_message;
@@ -18,11 +18,14 @@ const MessagesList = ({ messages, messageListRef, loading }) => {
 
     return (
         <div className="flex h-[65vh] w-[75vw] max-w-4xl flex-col items-center justify-center rounded-lg border border-[#30373d] bg-zinc-950">
-            <div className="scrollbar-hidden h-full w-full overflow-y-scroll rounded-lg">
+            <div
+                ref={messageListRef}
+                className="scrollbar-hidden h-full w-full overflow-y-scroll rounded-lg"
+            >
                 {messages &&
                     messages.map((msg, idx) => (
                         // Most recent query (user) msg will be animated whie response loads
-                        <div key={idx} className={_styleHelper(msg, idx)}>
+                        <div key={idx} className={_styleHelper(msg.type, messages.length, idx)}>
                             {/* Display icon based on msg type */}
                             {msg.type === "query" ? (
                                 <Image
