@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
-import { Navbar, MessagesList, QueryInput } from "@/components/list";
+import { Navbar, MessagesList, QueryInput, PDFInput } from "@/components/list";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,6 +57,7 @@ export default function Home() {
             </Head>
             <Navbar apiKey={apiKey} setApiKey={setApiKey} />
             <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-24">
+                <PDFInput setDocs={setDocs} setMessages={setMessages} />
                 <MessagesList
                     messages={messages}
                     messageListRef={messageListRef}

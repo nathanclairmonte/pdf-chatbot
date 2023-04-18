@@ -94,7 +94,7 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
             <button
                 type="submit"
                 disabled={loading}
-                className="mr-3 flex border-none bg-none p-1 text-[#eb9722] hover:rounded-sm hover:bg-[#1f2227] disabled:cursor-not-allowed disabled:bg-none disabled:opacity-90"
+                className="mr-3 flex border-none bg-none p-[0.3rem] text-[#eb9722] hover:rounded-sm hover:bg-[#1f2227] disabled:cursor-not-allowed disabled:bg-none disabled:opacity-90"
             >
                 {loading ? (
                     <CircularProgress size={24} color="inherit" />
