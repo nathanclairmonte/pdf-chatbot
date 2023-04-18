@@ -163,30 +163,32 @@ const PDFInput = ({ setDocs, setMessages }) => {
     return (
         <div className="flex w-[75vw] max-w-4xl flex-col">
             <p className="p-2 text-lg text-zinc-200">Please select a PDF:</p>
-            <div className="flex flex-col items-center justify-center gap-2 md:flex-row md:justify-between">
+            <div className="flex flex-col items-center justify-center gap-2 lg:flex-row lg:justify-between">
                 <form
                     onSubmit={handleLoadPDF}
-                    className="flex w-full flex-col items-stretch gap-2 sm:flex-row md:w-1/2"
+                    className="flex w-full flex-col items-stretch gap-2 sm:flex-row lg:w-1/2"
                 >
-                    <input
-                        accept="application/pdf"
-                        ref={fileInputRef}
-                        disabled={loading}
-                        autoFocus={false}
-                        type="file"
-                        id="file"
-                        name="file"
-                        onChange={storePDF}
-                        className="w-full resize-none rounded-[0.3rem] border border-[#30373d] p-3 text-[1.1rem] text-[#ececf1] outline-none disabled:opacity-50 sm:w-2/3"
-                    />
-                    {fileChosen ? (
-                        <button
-                            onClick={handleCloseFile}
-                            className="cursor-pointer border-none bg-none hover:opacity-80"
-                        >
-                            <IoIosCloseCircle className="text-[26px] text-red-600" />
-                        </button>
-                    ) : null}
+                    <div className="flex flex-row gap-2 sm:w-2/3">
+                        <input
+                            accept="application/pdf"
+                            ref={fileInputRef}
+                            disabled={loading}
+                            autoFocus={false}
+                            type="file"
+                            id="file"
+                            name="file"
+                            onChange={storePDF}
+                            className="w-full resize-none rounded-[0.3rem] border border-[#30373d] p-3 text-[1.1rem] text-[#ececf1] outline-none disabled:opacity-50"
+                        />
+                        {fileChosen ? (
+                            <button
+                                onClick={handleCloseFile}
+                                className="cursor-pointer border-none bg-none hover:opacity-80"
+                            >
+                                <IoIosCloseCircle className="text-[26px] text-red-600" />
+                            </button>
+                        ) : null}
+                    </div>
                     <button
                         type="submit"
                         disabled={loading}
