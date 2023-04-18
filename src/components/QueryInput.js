@@ -35,7 +35,7 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
         setMessages((prevMessages) => [...prevMessages, { text: query, type: "query" }]);
 
         // send query to backend API route
-        const response = await fetch("api/bot", {
+        const response = await fetch("api/query", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

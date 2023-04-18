@@ -13,7 +13,7 @@ const PDFInput = ({ setDocs, setMessages }) => {
     const [fileChosen, setFileChosen] = useState(false);
     const [status, setStatus] = useState({
         type: "neutral",
-        message: "test",
+        message: "",
     });
 
     // reference for the file input
@@ -97,7 +97,7 @@ const PDFInput = ({ setDocs, setMessages }) => {
         // give status update
         setStatus({
             type: "neutral",
-            message: `Loading ${file.name}...`,
+            message: `Loading \"${file.name}\"...`,
         });
 
         // get pre-signed URL for S3 upload and concat into formData object
