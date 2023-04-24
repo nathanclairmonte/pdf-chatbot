@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pdfchatbot-dev-140043-authRole",
+      "UnauthRoleArn": "arn:aws:iam::283061014149:role/amplify-pdfchatbot-dev-140043-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::283061014149:role/amplify-pdfchatbot-dev-140043-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pdfchatbot-dev-140043-deployment",
+      "UnauthRoleName": "amplify-pdfchatbot-dev-140043-unauthRole",
+      "StackName": "amplify-pdfchatbot-dev-140043",
+      "StackId": "arn:aws:cloudformation:us-east-1:283061014149:stack/amplify-pdfchatbot-dev-140043/704025f0-e06e-11ed-88b0-0e30e4289c11",
+      "AmplifyAppId": "d3ij4dhhwwerme"
+    }
+  }
+}
