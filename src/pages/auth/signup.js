@@ -28,7 +28,7 @@ const SignUp = () => {
                 <title>Sign Up</title>
             </Head>
             <section className="flex h-screen">
-                <div className="//bg-zinc-800 m-auto flex h-4/5 w-3/5 flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+                <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
                     <h1 className="text-2xl text-zinc-50">Sign Up</h1>
                     <form className="flex w-full flex-col gap-5">
                         {/* username input */}

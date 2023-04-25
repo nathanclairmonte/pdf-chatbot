@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const SignIn = () => {
     // state
@@ -17,13 +18,18 @@ const SignIn = () => {
         setShowPassword(!showPassword);
     };
 
+    // function to handle google signin
+    const _handleGoogleSignin = async () => {
+        signIn("google", { callbackUrl: "http://localhost:3000/" });
+    };
+
     return (
         <>
             <Head>
                 <title>Sign In</title>
             </Head>
             <section className="flex h-screen">
-                <div className="//bg-zinc-800 m-auto flex h-3/4 w-3/5 flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+                <div className="m-auto flex h-3/4 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
                     <h1 className="text-2xl text-zinc-50">Sign In</h1>
                     <form className="flex w-full flex-col gap-5">
                         {/* email input */}
@@ -68,6 +74,7 @@ const SignIn = () => {
                         <button
                             type="submit"
                             className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                            onClick={_handleGoogleSignin}
                         >
                             Sign In with Google
                             <FcGoogle className="mt-0.5 text-2xl" />
