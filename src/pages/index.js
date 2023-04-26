@@ -2,12 +2,12 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { Navbar, MessagesList, QueryInput, PDFInput } from "@/components/list";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ session }) {
     // state
     const [loading, setLoading] = useState(false);
     const [history, setHistory] = useState([]);
@@ -27,7 +27,7 @@ export default function Home() {
     // auth session
     // const { data: session } = useSession()
     // const session = true;
-    const session = false;
+    // const session = false;
 
     // auto scroll chat to bottom whenever messages state changes
     useEffect(() => {
@@ -97,3 +97,22 @@ export default function Home() {
         </>
     );
 }
+
+// // protect the homepage route. redirect to sign in if no user session exists.
+// // (commented out for now so I can test)
+// export async function getServerSideProps(context) {
+//     const session = await getSession(context.req);
+
+//     if (!session) {
+//         return {
+//             redirect: {
+//                 destination: "/auth/signin",
+//                 permanent: false,
+//             },
+//         };
+//     }
+
+//     return {
+//         props: { session },
+//     };
+// }

@@ -22,6 +22,11 @@ const SignUp = () => {
         }
     };
 
+    // function to handle google signin
+    const _handleGoogleSignin = async () => {
+        signIn("google", { callbackUrl: "http://localhost:3000/" });
+    };
+
     return (
         <>
             <Head>
@@ -102,6 +107,7 @@ const SignUp = () => {
                         <button
                             type="submit"
                             className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                            onClick={_handleGoogleSignin}
                         >
                             Sign Up with Google
                             <FcGoogle className="mt-0.5 text-2xl" />
