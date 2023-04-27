@@ -27,6 +27,20 @@ const SignUp = () => {
         signIn("google", { callbackUrl: "http://localhost:3000/" });
     };
 
+    // return (
+    //     <>
+    //         <Head>
+    //             <title>Sign Up</title>
+    //         </Head>
+    //         <section className="flex h-screen">
+    //             <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+    //                 <h1 className="text-2xl text-zinc-50">Sign Up</h1>
+    //                 {/* Formik */}
+    //             </div>
+    //         </section>
+    //     </>
+    // );
+
     return (
         <>
             <Head>
