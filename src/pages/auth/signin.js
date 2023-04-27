@@ -8,6 +8,7 @@ import { FormikTextInput, FormikPasswordInput } from "@/components/list";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const OAUTH_PROVIDERS_STRING = "Google";
 
@@ -44,7 +45,7 @@ const SignIn = () => {
     const { error: errorType } = router.query;
 
     // function to handle credentials signin
-    const handleCredentialsSignin = async (values, setSubmitting) => {
+    const handleCredentialsSignin = async (values) => {
         // attempt to sign in user
         const status = await signIn("credentials", {
             redirect: false,
@@ -59,8 +60,6 @@ const SignIn = () => {
         } else {
             setErrorMessage(getErrorMessage(status.error));
         }
-
-        setSubmitting(false);
     };
 
     // function to handle google signin
@@ -73,13 +72,17 @@ const SignIn = () => {
         setErrorMessage(getErrorMessage(errorType));
     }, [errorType]);
 
-    // // facilitate login on enter key press
-    // const handleEnterKeyPress = (event, formikProps) => {
-    //     const { email, password } = formikProps.values;
-    //     if (event.key === "Enter" && email && password) {
-    //         formikProps.handleSubmit();
-    //     }
-    // };
+    // facilitate login on enter key press
+    const handleEnterKeyPress = (event, formikProps) => {
+        const { email, password } = formikProps.values;
+        if (event.key === "Enter" && email && password) {
+            event.preventDefault();
+            formikProps.setSubmitting(true);
+            formikProps.handleSubmit();
+        } else if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    };
 
     // const errorMessage = getErrorMessage(errorType);
     return (
@@ -116,7 +119,8 @@ const SignIn = () => {
                         // }}
                         onSubmit={(values, { setSubmitting }) => {
                             setTimeout(() => {
-                                handleCredentialsSignin(values, setSubmitting);
+                                handleCredentialsSignin(values);
+                                setSubmitting(false);
                             }, 571);
                         }}
                         // onSubmit={(values, { setSubmitting }) => {
@@ -128,42 +132,51 @@ const SignIn = () => {
                         //     });
                         // }}
                     >
-                        <Form className="flex w-full flex-col gap-5">
-                            {/* email input */}
-                            <FormikTextInput name="email" type="email" placeholder="Email" />
-
-                            {/* password input  */}
-                            <FormikPasswordInput name="password" placeholder="Password" />
-
-                            {/* submit button */}
-                            <button
-                                type="submit"
-                                className="flex items-center justify-center rounded-md bg-[#eb9722] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                        {(props) => (
+                            <Form
+                                className="flex w-full flex-col gap-5"
+                                onKeyDown={(e) => handleEnterKeyPress(e, props)}
                             >
-                                Login
-                            </button>
+                                {/* email input */}
+                                <FormikTextInput name="email" type="email" placeholder="Email" />
 
-                            {/* content divider */}
-                            <div className="relative flex items-center py-3">
-                                <div className="flex-grow border-t border-[#eb9722]"></div>
-                                <span className="mx-4 flex-shrink text-zinc-400">or</span>
-                                <div className="flex-grow border-t border-[#eb9722]"></div>
-                            </div>
+                                {/* password input  */}
+                                <FormikPasswordInput name="password" placeholder="Password" />
 
-                            {/* google button */}
-                            {/* NB: the 'type="button"' is to make sure this button doesn't submit the
+                                {/* submit button */}
+                                <button
+                                    type="submit"
+                                    className="flex h-[3.15rem] items-center justify-center rounded-md bg-[#eb9722] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                                >
+                                    {props.isSubmitting ? (
+                                        <CircularProgress size={24} color="inherit" />
+                                    ) : (
+                                        <p>Login</p>
+                                    )}
+                                </button>
+
+                                {/* content divider */}
+                                <div className="relative flex items-center py-3">
+                                    <div className="flex-grow border-t border-[#eb9722]"></div>
+                                    <span className="mx-4 flex-shrink text-zinc-400">or</span>
+                                    <div className="flex-grow border-t border-[#eb9722]"></div>
+                                </div>
+
+                                {/* google button */}
+                                {/* NB: the 'type="button"' is to make sure this button doesn't submit the
                             email/password form above */}
-                            <button
-                                type="button"
-                                className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                                // onClick={handleGoogleSignin}
-                                // onClick={() => signIn("google", { callbackUrl }))}
-                                onClick={() => alert("google button clicked")}
-                            >
-                                Sign In with Google
-                                <FcGoogle className="mt-0.5 text-2xl" />
-                            </button>
-                        </Form>
+                                <button
+                                    type="button"
+                                    className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                                    // onClick={handleGoogleSignin}
+                                    // onClick={() => signIn("google", { callbackUrl }))}
+                                    onClick={() => alert("google button clicked")}
+                                >
+                                    Sign In with Google
+                                    <FcGoogle className="mt-0.5 text-2xl" />
+                                </button>
+                            </Form>
+                        )}
                     </Formik>
                     <p className="text-md mt-7 text-zinc-300">
                         Don't have an account yet?{" "}

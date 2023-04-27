@@ -46,6 +46,8 @@ export default async function handler(req, res) {
     } else {
         return res
             .status(500)
-            .json({ message: "HTTP method not valid. Only POST requests are allowed." });
+            .json({
+                message: `HTTP method ${req.method} not valid. Only POST requests are allowed.`,
+            });
     }
 }
