@@ -21,7 +21,6 @@ const errors = {
     OAuthAccountNotLinked:
         "To confirm your identity, sign in with the same account you used originally.",
     CredentialsSignin: "Username or password is incorrect.",
-    // SessionRequired: "Please sign in to access this page.", (leaving commented out for now, taken from Hamed Bahram youtube vid on custom Next Auth pages)
     SessionRequired: "",
     default: "Unable to sign in :(",
 };
@@ -29,9 +28,6 @@ const errors = {
 // translate an error type to its corresponding error message
 const getErrorMessage = (errorType) => {
     if (!errorType) return;
-    // if (errorType === "SessionRequired") { taken from Hamed Bahram custom Next Auth pages vid. leaving out for now.
-    //     return "";
-    // }
     if (errors[errorType]) {
         return errors[errorType];
     } else {
