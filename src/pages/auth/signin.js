@@ -54,10 +54,10 @@ const SignIn = () => {
                             </button>
 
                             {/* content divider */}
-                            <div class="relative flex items-center py-3">
-                                <div class="flex-grow border-t border-[#eb9722]"></div>
-                                <span class="mx-4 flex-shrink text-zinc-400">or</span>
-                                <div class="flex-grow border-t border-[#eb9722]"></div>
+                            <div className="relative flex items-center py-3">
+                                <div className="flex-grow border-t border-[#eb9722]"></div>
+                                <span className="mx-4 flex-shrink text-zinc-400">or</span>
+                                <div className="flex-grow border-t border-[#eb9722]"></div>
                             </div>
 
                             {/* google button */}
