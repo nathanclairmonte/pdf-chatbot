@@ -25,7 +25,7 @@ const PasswordInput = ({ ...props }) => {
             <div
                 className={`flex resize-none flex-row items-center justify-between rounded-md ${
                     meta.touched && meta.error
-                        ? "border-2 border-red-600"
+                        ? "border-2 border-red-500"
                         : "border border-[#30373d]"
                 } pr-3 text-[1.1rem] text-[#ececf1] disabled:opacity-50`}
             >
@@ -40,7 +40,7 @@ const PasswordInput = ({ ...props }) => {
                 </button>
             </div>
             {meta.touched && meta.error && (
-                <div className="error -mt-4 ml-2 text-red-600">{meta.error}</div>
+                <div className="error -mt-4 ml-2 text-red-500">{meta.error}</div>
             )}
         </>
     );
