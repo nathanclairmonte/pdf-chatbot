@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ session }) {
+export default function Home({}) {
     // state
     const [loading, setLoading] = useState(false);
     const [history, setHistory] = useState([]);
@@ -24,10 +24,8 @@ export default function Home({ session }) {
     const messageListRef = useRef(null);
     const queryInputRef = useRef(null);
 
-    // auth session
-    // const { data: session } = useSession()
-    // const session = true;
-    // const session = false;
+    // get auth session
+    const { data: session } = useSession();
 
     // auto scroll chat to bottom whenever messages state changes
     useEffect(() => {
