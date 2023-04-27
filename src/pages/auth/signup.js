@@ -1,45 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
-import { useState } from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { FormikTextInput, FormikPasswordInput } from "@/components/list";
 
 const SignUp = () => {
-    // state
-    const [showPassword, setShowPassword] = useState(false);
-    const [showCPassword, setShowCPassword] = useState(false);
-
-    // function to toggle show password
-    const _toggleShowPassword = (event, type) => {
-        // prevent browser refresh
-        event.preventDefault();
-
-        // toggle show password
-        if (type === "confirm") {
-            setShowCPassword(!showCPassword);
-        } else {
-            setShowPassword(!showPassword);
-        }
-    };
-
     // function to handle google signin
     const _handleGoogleSignin = async () => {
         signIn("google", { callbackUrl: "http://localhost:3000/" });
     };
-
-    // return (
-    //     <>
-    //         <Head>
-    //             <title>Sign Up</title>
-    //         </Head>
-    //         <section className="flex h-screen">
-    //             <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
-    //                 <h1 className="text-2xl text-zinc-50">Sign Up</h1>
-    //                 {/* Formik */}
-    //             </div>
-    //         </section>
-    //     </>
-    // );
 
     return (
         <>
@@ -49,84 +19,78 @@ const SignUp = () => {
             <section className="flex h-screen">
                 <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
                     <h1 className="text-2xl text-zinc-50">Sign Up</h1>
-                    <form className="flex w-full flex-col gap-5">
-                        {/* username input */}
-                        <div className="resize-none rounded-md border border-[#30373d] text-[1.1rem] text-[#ececf1] disabled:opacity-50">
-                            <input
-                                type="text"
-                                name="username"
-                                placeholder="Username"
-                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
-                            />
-                        </div>
+                    {/* Formik */}
+                    <Formik
+                        initialValues={{
+                            username: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: "",
+                        }}
+                        validationSchema={Yup.object({
+                            username: Yup.string().required("Username is required."),
+                            email: Yup.string()
+                                .email("Invalid email address")
+                                .required("Email is required."),
+                            password: Yup.string()
+                                .min(8, "Password must be at least 8 characters long.")
+                                .required("Password is required."),
+                            confirmPassword: Yup.string()
+                                .oneOf([Yup.ref("password"), null], "Passwords must match.")
+                                .required("Passwords must match."),
+                        })}
+                        onSubmit={(values, { setSubmitting }) => {
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                                setSubmitting(false);
+                            }, 1000);
+                        }}
+                    >
+                        <Form className="flex w-full flex-col gap-5">
+                            {/* username input */}
+                            <FormikTextInput name="username" type="text" placeholder="Username" />
 
-                        {/* email input */}
-                        <div className="resize-none rounded-md border border-[#30373d] text-[1.1rem] text-[#ececf1] disabled:opacity-50">
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
-                            />
-                        </div>
+                            {/* email input */}
+                            <FormikTextInput name="email" type="email" placeholder="Email" />
 
-                        {/* password input  */}
-                        <div className="flex resize-none flex-row items-center justify-between rounded-md border border-[#30373d] pr-3 text-[1.1rem] text-[#ececf1] disabled:opacity-50">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                placeholder="Password"
-                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
-                            />
-                            <button
-                                onClick={(e) => _toggleShowPassword(e, "normal")}
-                                className="hover:opacity-80"
-                            >
-                                {showPassword ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
-                            </button>
-                        </div>
+                            {/* password input  */}
+                            <FormikPasswordInput name="password" placeholder="Password" />
 
-                        {/* confirm password input  */}
-                        <div className="flex resize-none flex-row items-center justify-between rounded-md border border-[#30373d] pr-3 text-[1.1rem] text-[#ececf1] disabled:opacity-50">
-                            <input
-                                type={showCPassword ? "text" : "password"}
-                                name="password"
+                            {/* confirm password input  */}
+                            <FormikPasswordInput
+                                name="confirmPassword"
                                 placeholder="Confirm Password"
-                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
                             />
+
+                            {/* submit button */}
                             <button
-                                onClick={(e) => _toggleShowPassword(e, "confirm")}
-                                className="hover:opacity-80"
+                                type="submit"
+                                className="flex items-center justify-center rounded-md bg-[#eb9722] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
                             >
-                                {showCPassword ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+                                Sign Up
                             </button>
-                        </div>
 
-                        {/* login button */}
-                        <button
-                            type="submit"
-                            className="flex items-center justify-center rounded-md bg-[#eb9722] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                        >
-                            Sign Up
-                        </button>
+                            {/* content divider */}
+                            <div class="relative flex items-center py-3">
+                                <div class="flex-grow border-t border-[#eb9722]"></div>
+                                <span class="mx-4 flex-shrink text-zinc-400">or</span>
+                                <div class="flex-grow border-t border-[#eb9722]"></div>
+                            </div>
 
-                        {/* content divider */}
-                        <div class="relative flex items-center py-3">
-                            <div class="flex-grow border-t border-[#eb9722]"></div>
-                            <span class="mx-4 flex-shrink text-zinc-400">or</span>
-                            <div class="flex-grow border-t border-[#eb9722]"></div>
-                        </div>
-
-                        {/* google button */}
-                        <button
-                            type="submit"
-                            className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                            onClick={_handleGoogleSignin}
-                        >
-                            Sign Up with Google
-                            <FcGoogle className="mt-0.5 text-2xl" />
-                        </button>
-                    </form>
+                            {/* google button */}
+                            {/* NB: the 'type="button"' is to make sure this button doesn't submit the
+                            email/password form above */}
+                            <button
+                                type="button"
+                                className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                                // onClick={_handleGoogleSignin}
+                                onClick={() => alert("google button clicked")}
+                            >
+                                Sign Up with Google
+                                <FcGoogle className="mt-0.5 text-2xl" />
+                            </button>
+                        </Form>
+                    </Formik>
                     <p className="text-md mt-7 text-zinc-300">
                         Already have an account?{" "}
                         <Link href="/auth/signin" className="text-[#eb9722] hover:opacity-80">
