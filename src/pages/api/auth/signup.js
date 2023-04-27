@@ -17,12 +17,18 @@ export default async function handler(req, res) {
         // get data
         const { username, email, password } = req.body;
 
-        // check duplicate users
-        const existingUsers = await Users.findOne({ email });
-        if (existingUsers) {
+        // check duplicate users by email
+        const existingUsersEmail = await Users.findOne({ email });
+        if (existingUsersEmail) {
             return res
                 .status(422)
                 .json({ message: "User with that email address already exists." });
+        }
+
+        // check duplicate users by username
+        const existingUsersUsername = await Users.findOne({ username });
+        if (existingUsersUsername) {
+            return res.status(422).json({ message: "User with that username already exists." });
         }
 
         // hash password (need to install bcryptjs)
@@ -37,13 +43,6 @@ export default async function handler(req, res) {
         } catch (error) {
             return res.status(404).json({ error: `Something went wrong :( \n ${error}` });
         }
-
-        // Users.create({ username, email, password: hashedPassword }, (err, data) => {
-        //     if (err) {
-        //         return res.status(404).json({ error: err });
-        //     }
-        //     return res.status(201).json({ status: true, user: data });
-        // });
     } else {
         return res.status(500).json({ message: "HTTP method not valid. Only POST accepted." });
     }
