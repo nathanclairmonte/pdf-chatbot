@@ -3,18 +3,17 @@ import Users from "@/lib/authSchema";
 import { hash } from "bcryptjs";
 
 export default async function handler(req, res) {
-    // res.json({ message: "Sign up POST request" });
-
+    // connect to our MongoDB instance
     connectMongo().catch((error) => res.json({ error: `Connection failed :( \n ${error})` }));
 
     // accept only POST requests
     if (req.method === "POST") {
         // ensure we have user input
         if (!req.body) {
-            return res.status(404).json({ error: "Don't have form data! " });
+            return res.status(404).json({ error: "No form data given." });
         }
 
-        // get data
+        // get data from user input
         const { username, email, password } = req.body;
 
         // check duplicate users by email
@@ -31,9 +30,10 @@ export default async function handler(req, res) {
             return res.status(422).json({ message: "User with that username already exists." });
         }
 
-        // hash password (need to install bcryptjs)
-        // NB: BCrypt handles the salting and hashing for us in one function.
-        //     All we need to define is the "cost" (defined through our BCRYPT_SALTROUNDS env var)
+        // hash password
+        // NB: bcrypt handles the salting and hashing for us in one function.
+        //     All we need to define is the "cost" of the hashing.
+        //     (defined through our BCRYPT_SALTROUNDS env var)
         const hashedPassword = await hash(password, Number(process.env.BCRYPT_SALTROUNDS));
 
         // Save user info to database
@@ -44,6 +44,8 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: `Something went wrong :( \n ${error}` });
         }
     } else {
-        return res.status(500).json({ message: "HTTP method not valid. Only POST accepted." });
+        return res
+            .status(500)
+            .json({ message: "HTTP method not valid. Only POST requests are allowed." });
     }
 }
