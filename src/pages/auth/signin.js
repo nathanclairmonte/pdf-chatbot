@@ -2,25 +2,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
-import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextInput, FormikPasswordInput } from "@/components/list";
 
 const SignIn = () => {
-    // state
-    const [showPassword, setShowPassword] = useState(false);
-
-    // function to toggle show password
-    const toggleShowPassword = (event) => {
-        // prevent browser refresh
-        event.preventDefault();
-
-        // toggle show password
-        setShowPassword(!showPassword);
-    };
-
     // function to handle google signin
     const _handleGoogleSignin = async () => {
         signIn("google", { callbackUrl: "http://localhost:3000/" });
@@ -40,7 +27,7 @@ const SignIn = () => {
                         validationSchema={Yup.object({
                             email: Yup.string()
                                 .email("Invalid email address")
-                                .required("Email is required"),
+                                .required("Email is required."),
                             password: Yup.string()
                                 .min(8, "Password must be at least 8 characters long.")
                                 .required("Password is required."),
@@ -54,70 +41,10 @@ const SignIn = () => {
                     >
                         <Form className="flex w-full flex-col gap-5">
                             {/* email input */}
-                            <Field name="email">
-                                {({ field, meta }) => (
-                                    <>
-                                        <div
-                                            className={`resize-none rounded-md ${
-                                                meta.touched && meta.error
-                                                    ? "border-2 border-red-600"
-                                                    : "border border-[#30373d]"
-                                            } text-[1.1rem] text-[#ececf1] disabled:opacity-50`}
-                                        >
-                                            <input
-                                                type="text"
-                                                {...field}
-                                                placeholder="Email"
-                                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
-                                            />
-                                        </div>
-                                        {meta.touched && meta.error && (
-                                            <div className="error -mt-4 ml-2 text-red-600">
-                                                {meta.error}
-                                            </div>
-                                        )}
-                                    </>
-                                )}
-                            </Field>
-                            {/* <FormikTextInput name="email" type="email" placeholder="Email" /> */}
+                            <FormikTextInput name="email" type="email" placeholder="Email" />
 
                             {/* password input  */}
-                            <Field name="password">
-                                {({ field, meta }) => (
-                                    <>
-                                        <div
-                                            className={`flex resize-none flex-row items-center justify-between rounded-md ${
-                                                meta.touched && meta.error
-                                                    ? "border-2 border-red-600"
-                                                    : "border border-[#30373d]"
-                                            } pr-3 text-[1.1rem] text-[#ececf1] disabled:opacity-50`}
-                                        >
-                                            <input
-                                                type={showPassword ? "text" : "password"}
-                                                {...field}
-                                                placeholder="Password"
-                                                className="w-full rounded-md bg-[#070809] p-3 outline-none"
-                                            />
-                                            <button
-                                                onClick={toggleShowPassword}
-                                                className="hover:opacity-80"
-                                            >
-                                                {showPassword ? (
-                                                    <BsFillEyeFill />
-                                                ) : (
-                                                    <BsFillEyeSlashFill />
-                                                )}
-                                            </button>
-                                        </div>
-                                        {meta.touched && meta.error && (
-                                            <div className="error -mt-4 ml-2 text-red-600">
-                                                {meta.error}
-                                            </div>
-                                        )}
-                                    </>
-                                )}
-                            </Field>
-                            {/* <FormikPasswordInput name="password" placeholder="Password" /> */}
+                            <FormikPasswordInput name="password" placeholder="Password" />
 
                             <button type="submit">Login</button>
                         </Form>
