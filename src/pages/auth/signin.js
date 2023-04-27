@@ -5,13 +5,87 @@ import { signIn } from "next-auth/react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextInput, FormikPasswordInput } from "@/components/list";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
+
+const OAUTH_PROVIDERS_STRING = "Google";
+
+// possible authentication errors
+const errors = {
+    Signin: "Problem signing in. Please try again or try a different account!",
+    OAuthSignin: `Problem signing in with ${OAUTH_PROVIDERS_STRING}. Please try again or try signing in with a different account!`,
+    OAuthCallback: `Problem signing in with ${OAUTH_PROVIDERS_STRING}. Please try again or try signing in with a different account!`,
+    OAuthCreateAccount: `Problem signing in with ${OAUTH_PROVIDERS_STRING}. Please try again or try signing in with a different account!`,
+    Callback: "Problem signing in. Please try again or try a different account!",
+    OAuthAccountNotLinked:
+        "To confirm your identity, sign in with the same account you used originally.",
+    CredentialsSignin: "Username or password is incorrect.",
+    // SessionRequired: "Please sign in to access this page.", (leaving commented out for now, taken from Hamed Bahram youtube vid on custom Next Auth pages)
+    SessionRequired: "",
+    default: "Unable to sign in :(",
+};
+
+// translate an error type to its corresponding error message
+const getErrorMessage = (errorType) => {
+    if (!errorType) return;
+    // if (errorType === "SessionRequired") { taken from Hamed Bahram custom Next Auth pages vid. leaving out for now.
+    //     return "";
+    // }
+    if (errors[errorType]) {
+        return errors[errorType];
+    } else {
+        return errors.default;
+    }
+};
 
 const SignIn = () => {
+    // error message state
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // getting potential errors from callback redirect
+    const router = useRouter();
+    const { error: errorType } = router.query;
+
+    // function to handle credentials signin
+    const handleCredentialsSignin = async (values, setSubmitting) => {
+        // attempt to sign in user
+        const status = await signIn("credentials", {
+            redirect: false,
+            email: values.email,
+            password: values.password,
+            callbackUrl: "/",
+        });
+
+        console.log(status);
+        if (status.ok) {
+            router.push(status.url);
+        } else {
+            setErrorMessage(getErrorMessage(status.error));
+        }
+
+        setSubmitting(false);
+    };
+
     // function to handle google signin
-    const _handleGoogleSignin = async () => {
+    const handleGoogleSignin = () => {
         signIn("google", { callbackUrl: "http://localhost:3000/" });
     };
 
+    // populate error message state when errorType changes
+    useEffect(() => {
+        setErrorMessage(getErrorMessage(errorType));
+    }, [errorType]);
+
+    // // facilitate login on enter key press
+    // const handleEnterKeyPress = (event, formikProps) => {
+    //     const { email, password } = formikProps.values;
+    //     if (event.key === "Enter" && email && password) {
+    //         formikProps.handleSubmit();
+    //     }
+    // };
+
+    // const errorMessage = getErrorMessage(errorType);
     return (
         <>
             <Head>
@@ -19,6 +93,13 @@ const SignIn = () => {
             </Head>
             <section className="flex h-screen">
                 <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+                    {/* display error message if we have one */}
+                    {errorMessage && (
+                        <div className="w-full rounded border border-red-500 p-4 text-center text-base text-red-500">
+                            <p>{errorMessage}</p>
+                        </div>
+                    )}
+
                     <h1 className="text-2xl text-zinc-50">Sign In</h1>
                     {/* Formik */}
                     <Formik
@@ -31,12 +112,25 @@ const SignIn = () => {
                                 .min(8, "Password must be at least 8 characters long.")
                                 .required("Password is required."),
                         })}
+                        // onSubmit={(values, { setSubmitting }) => {
+                        //     setTimeout(() => {
+                        //         alert(JSON.stringify(values, null, 2));
+                        //         setSubmitting(false);
+                        //     }, 1000);
+                        // }}
                         onSubmit={(values, { setSubmitting }) => {
                             setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 1000);
+                                handleCredentialsSignin(values, setSubmitting);
+                            }, 571);
                         }}
+                        // onSubmit={(values, { setSubmitting }) => {
+                        //     signIn("credentials", {
+                        //         redirect: false,
+                        //         email: values.email,
+                        //         password: values.password,
+                        //         callbackUrl,
+                        //     });
+                        // }}
                     >
                         <Form className="flex w-full flex-col gap-5">
                             {/* email input */}
@@ -66,7 +160,8 @@ const SignIn = () => {
                             <button
                                 type="button"
                                 className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                                // onClick={_handleGoogleSignin}
+                                // onClick={handleGoogleSignin}
+                                // onClick={() => signIn("google", { callbackUrl }))}
                                 onClick={() => alert("google button clicked")}
                             >
                                 Sign In with Google
