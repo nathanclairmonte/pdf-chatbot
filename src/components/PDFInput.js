@@ -300,10 +300,10 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                             {samplePDFs.map((pdf) => (
                                 <button
                                     type="button"
-                                    className={`flex items-center justify-center rounded-full border-2 border-[#eb9722] px-4 py-3  ${
+                                    className={`flex items-center justify-center rounded-full border-2 px-4 py-3  ${
                                         pdf.selected
-                                            ? "bg-[#eb9722] text-zinc-50"
-                                            : "bg-inherit text-zinc-300"
+                                            ? "border-[#eb9722] bg-[#eb9722] text-zinc-50"
+                                            : "border-sky-200 bg-inherit text-sky-200"
                                     }`}
                                     onClick={() => {
                                         setSamplePDFs(

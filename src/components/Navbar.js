@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 
 const Navbar = ({ apiKey, setApiKey, session }) => {
     return (
-        <div className="flex flex-col gap-1 border-b-2 border-b-[#eb9722] bg-zinc-900">
+        <div className="flex flex-col gap-1 border-b border-b-sky-200 bg-zinc-900">
             <div className="flex flex-row items-center justify-between px-3 py-4">
                 <Link href="/" className="ml-4 text-xl text-[#eb9722] hover:opacity-80">
                     PDF ChatBot
