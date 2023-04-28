@@ -22,7 +22,7 @@ const _fetchPDF = async (pdfName) => {
 };
 
 export default async function handler(req, res) {
-    console.log("splitting into chunks...");
+    // console.log("splitting into chunks...");
     // load and split PDF into chunks
     try {
         // get file blob and load PDF with langchain
@@ -42,7 +42,9 @@ export default async function handler(req, res) {
         return res.status(200).json({
             result: {
                 type: "success",
-                message: `Success! \"${req.query.fileName}\" loaded.`,
+                message: `Success! \"${
+                    req.query.name ? req.query.name : req.query.fileName
+                }\" loaded.`,
                 docs: docs,
             },
         });
