@@ -299,6 +299,7 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                         <div className="flex flex-row flex-wrap items-center justify-center gap-3">
                             {samplePDFs.map((pdf) => (
                                 <button
+                                    key={pdf.key}
                                     type="button"
                                     className={`flex items-center justify-center rounded-full border-2 px-4 py-3  ${
                                         pdf.selected
