@@ -4,9 +4,15 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // import connectMongo from "@/lib/connect";
 // import Users from "@/lib/authSchema";
 // import { compare } from "bcryptjs";
-import { signinUser } from "@/lib/authUtils";
+import { nextAuthSigninCallback, signinUser } from "@/lib/authUtils";
 
 export const authOptions = {
+    // Configure callbacks
+    callbacks: {
+        async signIn(signInProps) {
+            return nextAuthSigninCallback(signInProps);
+        },
+    },
     // Configure authentication providers
     providers: [
         GoogleProvider({
