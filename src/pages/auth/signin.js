@@ -64,7 +64,7 @@ const SignIn = () => {
 
     // function to handle google signin
     const handleGoogleSignin = () => {
-        signIn("google", { callbackUrl: `${process.env.NEXTAUTH_URL}/` });
+        signIn("google", { callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/` });
     };
 
     // populate error message state when errorType changes
@@ -165,9 +165,9 @@ const SignIn = () => {
                                 <button
                                     type="button"
                                     className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                                    // onClick={handleGoogleSignin}
+                                    onClick={handleGoogleSignin}
                                     // onClick={() => signIn("google", { callbackUrl }))}
-                                    onClick={() => alert("google button clicked")}
+                                    // onClick={() => alert("google button clicked")}
                                 >
                                     Sign In with Google
                                     <FcGoogle className="mt-0.5 text-2xl" />

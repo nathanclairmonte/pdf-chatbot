@@ -24,6 +24,7 @@ const SignUp = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                providerType: "credentials",
                 name: values.name,
                 email: values.email,
                 password: values.password,
@@ -44,7 +45,7 @@ const SignUp = () => {
 
     // function to handle google signup
     const handleGoogleSignup = async () => {
-        signIn("google", { callbackUrl: `${process.env.NEXTAUTH_URL}/` });
+        signIn("google", { callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/unauthorized` });
     };
 
     // facilitate form submit on enter key press
@@ -147,8 +148,8 @@ const SignUp = () => {
                                 <button
                                     type="button"
                                     className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                                    // onClick={handleGoogleSignup}
-                                    onClick={() => alert("google button clicked")}
+                                    onClick={handleGoogleSignup}
+                                    // onClick={() => alert("google button clicked")}
                                 >
                                     Sign Up with Google
                                     <FcGoogle className="mt-0.5 text-2xl" />
