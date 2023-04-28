@@ -45,13 +45,12 @@ export const nextAuthSigninCallback = async ({ user, account, profile }) => {
 
     // if we didn't get an account.type, something went wrong. redirect to home.
     if (!account.provider || !user) {
-        // console.log("didn't get account.provider");
         return homePage;
     }
 
     // connect to MongoDB instance
     connectMongo().catch((error) => {
-        // console.log(`MongoDB connection failed \n ${error}`);
+        console.log(`MongoDB connection failed \n ${error}`);
         return homePage;
     });
 
@@ -66,8 +65,9 @@ export const nextAuthSigninCallback = async ({ user, account, profile }) => {
             // console.log("found user");
             return dbUser.authorized && dbUser.authorized === true ? true : unauthorizedPage;
         } else {
+            // console.log("no existing user found");
             // if user doesn't exist in db, check provider type.
-            // (NB: might have to update if we add another oauth provider. {profile.name} might be called something else.)
+            // (NB: might have to update if we add another oauth provider. {user.name} might be called something else.)
             if (account.provider === "credentials") {
                 // if credentials type, there's a problem somewhere. user should already exist in db.
                 // the user has probably mistyped their email address.
@@ -78,14 +78,15 @@ export const nextAuthSigninCallback = async ({ user, account, profile }) => {
                 try {
                     // add user info to db
                     await Users.create({
-                        name: `${profile.name}`,
+                        providerType: account.provider,
+                        name: `${user.name}`,
                         email: user.email,
                         password: "", // empty password for oauth users
                         authorized: false, // new users unauthorized by default
                     });
 
-                    // redirect to unauthorized page (since new user, by default won't be authorized)
-                    return unauthorizedPage;
+                    // return true (to continue sign in flow)
+                    return true;
                 } catch (error) {
                     // error creating user in DB. halt signin process and return home
                     return homePage;
