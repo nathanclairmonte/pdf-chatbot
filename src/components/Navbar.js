@@ -8,19 +8,17 @@ const Navbar = ({ apiKey, setApiKey, session }) => {
                 <Link href="/" className="ml-4 text-xl text-[#eb9722] hover:opacity-80">
                     PDF ChatBot
                 </Link>
-                {session ? (
-                    <input
-                        autoFocus={false}
-                        rows={1}
-                        type="password"
-                        id="apiKey"
-                        name="apiKey"
-                        placeholder="Enter your OpenAI API key here"
-                        value={apiKey}
-                        onChange={(e) => setApiKey(e.target.value)}
-                        className="ml-4 hidden h-11 w-2/4 max-w-xl resize-none rounded border-zinc-800 bg-zinc-200 p-4 text-lg text-zinc-900 outline-none md:flex"
-                    />
-                ) : null}
+                <input
+                    autoFocus={false}
+                    rows={1}
+                    type="password"
+                    id="apiKey"
+                    name="apiKey"
+                    placeholder="Enter your OpenAI API key here"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    className="ml-4 hidden h-11 w-2/4 max-w-xl resize-none rounded border-zinc-800 bg-zinc-200 p-4 text-lg text-zinc-900 outline-none md:flex"
+                />
                 <div className="mr-4 flex flex-row items-center justify-end gap-5">
                     <Link
                         href="https://github.com/nathanclairmonte/pdf-chatbot"
@@ -40,21 +38,19 @@ const Navbar = ({ apiKey, setApiKey, session }) => {
                     ) : null}
                 </div>
             </div>
-            {session ? (
-                <div className="flex flex-row justify-center px-4 pb-4 md:hidden">
-                    <input
-                        autoFocus={false}
-                        rows={1}
-                        type="password"
-                        id="apiKey"
-                        name="apiKey"
-                        placeholder="Enter your OpenAI API key here"
-                        value={apiKey}
-                        onChange={(e) => setApiKey(e.target.value)}
-                        className="h-11 w-2/4 max-w-xl flex-grow resize-none rounded border-zinc-800 bg-zinc-200 p-4 text-lg text-zinc-900 outline-none"
-                    />
-                </div>
-            ) : null}
+            <div className="flex flex-row justify-center px-4 pb-4 md:hidden">
+                <input
+                    autoFocus={false}
+                    rows={1}
+                    type="password"
+                    id="apiKey"
+                    name="apiKey"
+                    placeholder="Enter your OpenAI API key here"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    className="h-11 w-2/4 max-w-xl flex-grow resize-none rounded border-zinc-800 bg-zinc-200 p-4 text-lg text-zinc-900 outline-none"
+                />
+            </div>
         </div>
     );
 };
