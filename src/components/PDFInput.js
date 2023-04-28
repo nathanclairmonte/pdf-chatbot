@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
 import { IoIosCloseCircle } from "react-icons/io";
+import { FiExternalLink } from "react-icons/fi";
 import Link from "next/link";
 
 const MAX_FILE_SIZE_MB = 16;
@@ -10,18 +11,21 @@ const SAMPLE_PDFS = [
     {
         key: 0,
         fileName: "pdfchatbot-samplePDF-Attention_Is_All_You_Need.pdf",
+        link: "https://arxiv.org/pdf/1706.03762.pdf",
         name: "Attention Is All You Need",
         selected: true,
     },
     {
         key: 1,
         fileName: "pdfchatbot-samplePDF-EMBC_Lung_Volume_Paper.pdf",
+        link: "https://ieeexplore.ieee.org/document/9176119",
         name: "CNN-Based Lung Volume Clf",
         selected: false,
     },
     {
         key: 2,
         fileName: "pdfchatbot-samplePDF-GPT4_Technical_Report.pdf",
+        link: "https://arxiv.org/pdf/2303.08774.pdf",
         name: "GPT-4 Technical Report",
         selected: false,
     },
@@ -38,16 +42,18 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
         message: "",
     });
     const [samplePDFs, setSamplePDFs] = useState(SAMPLE_PDFS);
+    const [samplePDFLink, setSamplePDFLink] = useState("");
 
     // reference for the file input
     const fileInputRef = useRef(null);
 
-    // clear status message whenever session changes
+    // clear status message & samplePDFLink whenever session changes
     useEffect(() => {
         setStatus({
             type: "neutral",
             message: "",
         });
+        setSamplePDFLink("");
     }, [session]);
 
     // select status styling based on message type
@@ -60,7 +66,7 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
             return "text-center text-lg text-green-600";
         } else {
             // return neutral styles
-            return "text-center text-lg text-white";
+            return "text-center text-lg text-zinc-300";
         }
     };
 
@@ -236,6 +242,7 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                     type: "response",
                 },
             ]);
+            setSamplePDFLink(sample.link);
         }
         setLoading(false);
     };
@@ -243,17 +250,17 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
     return (
         <div className="flex w-[75vw] max-w-4xl flex-col">
             {session ? (
-                <p className="p-2 text-lg text-zinc-200">Please select a PDF:</p>
+                <p className="p-2 text-lg text-zinc-300">Please select a PDF:</p>
             ) : (
                 <div className="mb-4 flex flex-col">
-                    <p className="-mb-2 p-2 text-lg text-zinc-200">
+                    <p className="-mb-2 p-2 text-lg text-zinc-300">
                         To load your own PDFs, please{" "}
                         <Link href="/auth/signin" className="text-[#eb9722] hover:opacity-80">
                             Sign In
                         </Link>
                     </p>
-                    <p className="p-2 text-lg text-zinc-200">
-                        In the meantime though, you can select a sample PDF to load:
+                    <p className="p-2 text-lg text-zinc-300">
+                        In the meantime, you can select a sample PDF to load:
                     </p>
                 </div>
             )}
@@ -293,8 +300,10 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                             {samplePDFs.map((pdf) => (
                                 <button
                                     type="button"
-                                    className={`flex items-center justify-center rounded-full border-2 border-[#eb9722] px-4 py-3 text-zinc-50 ${
-                                        pdf.selected ? "bg-[#eb9722]" : "bg-inherit"
+                                    className={`flex items-center justify-center rounded-full border-2 border-[#eb9722] px-4 py-3  ${
+                                        pdf.selected
+                                            ? "bg-[#eb9722] text-zinc-50"
+                                            : "bg-inherit text-zinc-300"
                                     }`}
                                     onClick={() => {
                                         setSamplePDFs(
@@ -317,7 +326,7 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`h-14 w-full flex-grow rounded-[0.3rem] border-none bg-[#eb9722] p-2 text-white hover:cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:bg-[#1f2227] ${
+                        className={`h-14 w-full flex-grow rounded-[0.3rem] border-none bg-[#eb9722] p-2 text-white hover:cursor-pointer hover:opacity-80 disabled:bg-[#1f2227] ${
                             session ? "sm:h-auto sm:w-1/3" : ""
                         }`}
                     >
@@ -338,11 +347,24 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
                         )}
                     </button>
                 </form>
-                {status.message ? (
+                {status.message && (
                     <div className="mt-2 flex flex-grow items-center justify-center">
                         <p className={_statusStyleHelper(status.type)}>{status.message}</p>
                     </div>
-                ) : null}
+                )}
+                {samplePDFLink && (
+                    <div className="flex flex-grow items-center justify-center">
+                        <Link
+                            href={samplePDFLink}
+                            className="text-md flex gap-2 text-center text-zinc-300 underline hover:opacity-80"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <p>PDF Link</p>
+                            <FiExternalLink size={20} className="mt-1" />
+                        </Link>
+                    </div>
+                )}
             </div>
         </div>
     );
