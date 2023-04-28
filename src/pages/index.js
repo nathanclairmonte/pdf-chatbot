@@ -29,27 +29,25 @@ export default function Home({}) {
 
     // auto scroll chat to bottom whenever messages state changes
     useEffect(() => {
-        if (session) {
-            // put ref into variable (for readability)
-            const messageList = messageListRef.current;
+        // put ref into variable (for readability)
+        const messageList = messageListRef.current;
 
-            // save current window scroll position
-            const prevWinScrollY = window.scrollY;
+        // save current window scroll position
+        const prevWinScrollY = window.scrollY;
 
-            // scroll chat to bottom
-            messageList.scrollTop = messageList.scrollHeight;
+        // scroll chat to bottom
+        messageList.scrollTop = messageList.scrollHeight;
 
-            // refocus on the query input
-            queryInputRef.current.focus();
+        // refocus on the query input
+        queryInputRef.current.focus();
 
-            // restore window scroll position
-            window.scrollTo(0, prevWinScrollY);
-        }
+        // restore window scroll position
+        window.scrollTo(0, prevWinScrollY);
     }, [messages]);
 
     // keep history up to date (and doesn't exceed 2 messages in length)
     useEffect(() => {
-        if (messages.length > 2 && session) {
+        if (messages.length > 2) {
             setHistory([messages[messages.length - 2].text, messages[messages.length - 1].text]);
         }
     }, [messages]);
@@ -58,7 +56,7 @@ export default function Home({}) {
         <>
             <Head>
                 <title>PDF ChatBot</title>
-                <meta name="description" content="Made by Nathan Clairmonte" />
+                <meta name="description" content="Made by Nathan Clairmonte." />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
