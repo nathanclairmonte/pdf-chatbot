@@ -1,9 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
-    username: String,
+    name: String,
     email: String,
     password: String,
+    authorized: Boolean,
 });
 
 const Users = models.user || model("user", userSchema);
