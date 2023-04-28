@@ -64,7 +64,7 @@ const SignIn = () => {
 
     // function to handle google signin
     const handleGoogleSignin = () => {
-        signIn("google", { callbackUrl: "http://localhost:3000/" });
+        signIn("google", { callbackUrl: `${process.env.NEXTAUTH_URL}/` });
     };
 
     // populate error message state when errorType changes
@@ -72,7 +72,7 @@ const SignIn = () => {
         setErrorMessage(getErrorMessage(errorType));
     }, [errorType]);
 
-    // facilitate login on enter key press
+    // facilitate form submit on enter key press
     const handleEnterKeyPress = (event, formikProps) => {
         const { email, password } = formikProps.values;
         if (event.key === "Enter" && email && password) {
@@ -84,14 +84,13 @@ const SignIn = () => {
         }
     };
 
-    // const errorMessage = getErrorMessage(errorType);
     return (
         <>
             <Head>
                 <title>Sign In</title>
             </Head>
             <section className="flex h-screen">
-                <div className="m-auto flex h-4/5 w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+                <div className="m-auto flex w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
                     {/* display error message if we have one */}
                     {errorMessage && (
                         <div className="w-full rounded border border-red-500 p-4 text-center text-base text-red-500">
@@ -107,9 +106,7 @@ const SignIn = () => {
                             email: Yup.string()
                                 .email("Invalid email address")
                                 .required("Email is required."),
-                            password: Yup.string()
-                                .min(8, "Password must be at least 8 characters long.")
-                                .required("Password is required."),
+                            password: Yup.string().required("Password is required."),
                         })}
                         // onSubmit={(values, { setSubmitting }) => {
                         //     setTimeout(() => {
