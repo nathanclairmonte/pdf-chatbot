@@ -64,33 +64,33 @@ export default function Home({}) {
             </Head>
             <Navbar apiKey={apiKey} setApiKey={setApiKey} session={session} />
             <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-24">
-                {session ? (
-                    <>
-                        <PDFInput setDocs={setDocs} setMessages={setMessages} />
-                        <MessagesList
-                            messages={messages}
-                            messageListRef={messageListRef}
-                            loading={loading}
-                        />
-                        <QueryInput
-                            loading={loading}
-                            queryInputRef={queryInputRef}
-                            history={history}
-                            docs={docs}
-                            apiKey={apiKey}
-                            setLoading={setLoading}
-                            setMessages={setMessages}
-                        />
-                    </>
-                ) : (
-                    <div className="flex flex-row gap-2 text-2xl text-zinc-50">
-                        Please{" "}
-                        <Link href="/auth/signin" className="text-[#eb9722] hover:opacity-80">
-                            Sign in
-                        </Link>
-                        to use the PDF ChatBot!
-                    </div>
-                )}
+                <>
+                    <PDFInput setDocs={setDocs} setMessages={setMessages} session={session} />
+                    <MessagesList
+                        messages={messages}
+                        messageListRef={messageListRef}
+                        loading={loading}
+                    />
+                    <QueryInput
+                        loading={loading}
+                        queryInputRef={queryInputRef}
+                        history={history}
+                        docs={docs}
+                        apiKey={apiKey}
+                        setLoading={setLoading}
+                        setMessages={setMessages}
+                    />
+                </>
+
+                {/* No longer using this div below because I'm now allowing signed-out users
+                to still load and chat with some sample PDFs */}
+                {/* <div className="flex flex-row gap-2 text-2xl text-zinc-50">
+                    Please{" "}
+                    <Link href="/auth/signin" className="text-[#eb9722] hover:opacity-80">
+                        Sign in
+                    </Link>
+                    to use the PDF ChatBot!
+                </div> */}
             </main>
         </>
     );
