@@ -19,15 +19,14 @@ export default async function handler(req, res) {
         }
 
         // get data from user input
-        const { name, email, password, authorized } = req.body;
+        const { providerType, name, email, password, authorized } = req.body;
 
         // check duplicate users by email
         const existingUsersEmail = await Users.findOne({ email });
         if (existingUsersEmail) {
-            console.log({ ...output, error: "User with that email address already exists." });
             return res
                 .status(422)
-                .json({ ...output, error: "User with that email address already exists." });
+                .json({ ...output, error: "User with that email already exists." });
         }
 
         // hash password
@@ -38,7 +37,13 @@ export default async function handler(req, res) {
 
         // Save user info to database
         try {
-            const user = await Users.create({ name, email, authorized, password: hashedPassword });
+            const user = await Users.create({
+                providerType,
+                name,
+                email,
+                authorized,
+                password: hashedPassword,
+            });
             return res.status(201).json({ ...output, ok: true, user });
         } catch (error) {
             return res
