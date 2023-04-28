@@ -90,7 +90,7 @@ const SignIn = () => {
                 <title>Sign In</title>
             </Head>
             <section className="flex h-screen">
-                <div className="m-auto flex w-3/5 max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border border-gray-700 p-8">
+                <div className="m-auto flex w-full max-w-lg flex-col items-center justify-evenly gap-5 rounded-md border-gray-700 p-8 sm:w-3/5 sm:border">
                     {/* display error message if we have one */}
                     {errorMessage && (
                         <div className="w-full rounded border border-red-500 p-4 text-center text-base text-red-500">
@@ -98,7 +98,7 @@ const SignIn = () => {
                         </div>
                     )}
 
-                    <h1 className="text-2xl text-zinc-50">Sign In</h1>
+                    <h1 className="mb-5 text-2xl text-zinc-50">Sign In</h1>
                     {/* Formik */}
                     <Formik
                         initialValues={{ email: "", password: "" }}
@@ -134,6 +134,27 @@ const SignIn = () => {
                                 className="flex w-full flex-col gap-5"
                                 onKeyDown={(e) => handleEnterKeyPress(e, props)}
                             >
+                                {/* google button */}
+                                {/* NB: the 'type="button"' is to make sure this button doesn't submit the
+                            email/password form above */}
+                                <button
+                                    type="button"
+                                    className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
+                                    onClick={handleGoogleSignin}
+                                    // onClick={() => signIn("google", { callbackUrl }))}
+                                    // onClick={() => alert("google button clicked")}
+                                >
+                                    Sign In with Google
+                                    <FcGoogle className="mt-0.5 text-2xl" />
+                                </button>
+
+                                {/* content divider */}
+                                <div className="relative flex items-center py-3">
+                                    <div className="flex-grow border-t border-[#eb9722]"></div>
+                                    <span className="mx-4 flex-shrink text-zinc-400">or</span>
+                                    <div className="flex-grow border-t border-[#eb9722]"></div>
+                                </div>
+
                                 {/* email input */}
                                 <FormikTextInput name="email" type="email" placeholder="Email" />
 
@@ -150,27 +171,6 @@ const SignIn = () => {
                                     ) : (
                                         <p>Login</p>
                                     )}
-                                </button>
-
-                                {/* content divider */}
-                                <div className="relative flex items-center py-3">
-                                    <div className="flex-grow border-t border-[#eb9722]"></div>
-                                    <span className="mx-4 flex-shrink text-zinc-400">or</span>
-                                    <div className="flex-grow border-t border-[#eb9722]"></div>
-                                </div>
-
-                                {/* google button */}
-                                {/* NB: the 'type="button"' is to make sure this button doesn't submit the
-                            email/password form above */}
-                                <button
-                                    type="button"
-                                    className="flex items-center justify-center gap-3 rounded-md border border-[#30373d] p-3 text-[1.1rem] text-zinc-50 hover:opacity-80"
-                                    onClick={handleGoogleSignin}
-                                    // onClick={() => signIn("google", { callbackUrl }))}
-                                    // onClick={() => alert("google button clicked")}
-                                >
-                                    Sign In with Google
-                                    <FcGoogle className="mt-0.5 text-2xl" />
                                 </button>
                             </Form>
                         )}
