@@ -1,9 +1,8 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
-import { Navbar, MessagesList, QueryInput, PDFInput } from "@/components/list";
-import { getSession, useSession } from "next-auth/react";
-import Link from "next/link";
+import { Navbar, Footer, MessagesList, QueryInput, PDFInput } from "@/components/list";
+import { useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -78,6 +77,7 @@ export default function Home({}) {
                         setLoading={setLoading}
                         setMessages={setMessages}
                     />
+                    <Footer />
                 </>
 
                 {/* No longer using this div below because I'm now allowing signed-out users
