@@ -17,7 +17,7 @@ const MessagesList = ({ messages, messageListRef, loading }) => {
     };
 
     return (
-        <div className="flex h-[65vh] w-[100vw] max-w-4xl flex-col items-center justify-center border border-[#30373d] bg-zinc-950 sm:w-[75vw] sm:rounded-lg">
+        <div className="flex h-[65vh] w-[100vw] max-w-4xl flex-col items-center justify-center rounded-lg border border-[#30373d] bg-zinc-950 sm:w-[75vw]">
             <div
                 ref={messageListRef}
                 className="scrollbar-hidden h-full w-full overflow-y-scroll rounded-lg"

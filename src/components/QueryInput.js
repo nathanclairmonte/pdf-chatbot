@@ -73,7 +73,7 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
     return (
         <form
             onSubmit={handleSubmitQuery}
-            className="flex w-[100vw] max-w-4xl flex-row items-center border border-[#30373d] bg-zinc-950 sm:w-[75vw] sm:rounded-lg"
+            className="flex w-[100vw] max-w-4xl flex-row items-center rounded-lg border border-[#30373d] bg-zinc-950 sm:w-[75vw]"
         >
             <input
                 disabled={loading}
