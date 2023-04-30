@@ -73,9 +73,8 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
     return (
         <form
             onSubmit={handleSubmitQuery}
-            className="flex w-[75vw] max-w-4xl flex-row items-center rounded-lg border border-[#30373d] bg-zinc-950"
+            className="flex w-[100vw] max-w-4xl flex-row items-center border border-[#30373d] bg-zinc-950 sm:w-[75vw] sm:rounded-lg"
         >
-            {/* <textarea /> replace with input?? */}
             <input
                 disabled={loading}
                 onKeyDown={handleEnterKeyPress}
@@ -93,7 +92,7 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
                 }
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                className="flex-grow resize-none rounded-lg border-none bg-zinc-950 px-6 py-4 text-lg text-[#ececf1] outline-none placeholder:text-[#5f6368] disabled:opacity-50"
+                className="flex-grow resize-none break-normal rounded-lg border-none bg-zinc-950 px-6 py-4 text-lg text-[#ececf1] outline-none placeholder:text-[#5f6368] disabled:opacity-50"
             />
             <button
                 type="submit"

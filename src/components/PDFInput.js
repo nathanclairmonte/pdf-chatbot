@@ -248,7 +248,7 @@ const PDFInput = ({ setDocs, setMessages, session }) => {
     };
 
     return (
-        <div className="flex w-[75vw] max-w-4xl flex-col">
+        <div className="flex w-[90vw] max-w-4xl flex-col sm:w-[75vw]">
             {session ? (
                 <p className="p-2 text-lg text-zinc-300">Please select a PDF:</p>
             ) : (
