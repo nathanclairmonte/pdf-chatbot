@@ -86,7 +86,11 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
                 type="text"
                 id="query"
                 name="query"
-                placeholder={loading ? "Waiting for response..." : "E.g. What is this PDF about?"}
+                placeholder={
+                    loading
+                        ? "Waiting for response..."
+                        : "E.g. Can you give me a summary of this paper?"
+                }
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 className="flex-grow resize-none rounded-lg border-none bg-zinc-950 px-6 py-4 text-lg text-[#ececf1] outline-none placeholder:text-[#5f6368] disabled:opacity-50"
