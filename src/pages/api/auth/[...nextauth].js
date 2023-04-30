@@ -23,6 +23,7 @@ export const authOptions = {
             name: "Credentials",
             // credentials: {},
             async authorize(credentials, _) {
+                console.log("start of authorize() function\n");
                 try {
                     const { email, password } = credentials;
                     const { user, error } = await signinUser(email, password);

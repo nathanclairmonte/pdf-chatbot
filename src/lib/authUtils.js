@@ -3,24 +3,31 @@ import Users from "@/lib/authSchema";
 import { compare } from "bcryptjs";
 
 export const signinUser = async (userInputEmail, userInputPassword) => {
+    console.log("start of signinUser() function\n");
+
     // output variable
     const output = { user: null, error: null };
 
     // connect to MongoDB instance
+    console.log("Connecting to MongoDB from signinUser() function...");
     connectMongo().catch((error) => {
         output.error = `Connection failed :( \n ${error})`;
         return;
     });
+    console.log("Successfully connected to MongoDB!\n");
 
     // ensure user exists
+    console.log(`Searching for user with email ${userInputEmail}...`);
     const user = await Users.findOne({ email: userInputEmail });
     if (!user) {
         // throw new Error("No user found with that email. Please sign up first!");
         output.error = "No user found with that email. Please sign up first!";
         return;
     }
+    console.log("User found!\n");
 
     // if user exists, compare password with hash in DB
+    console.log("Comparing password with DB...");
     const checkPassword = await compare(userInputPassword, user.password);
 
     // throw error if incorrect password or email (not specifying exactly which for security)
@@ -29,12 +36,15 @@ export const signinUser = async (userInputEmail, userInputPassword) => {
         output.error = "Username or password is incorrect.";
         return;
     }
+    console.log("Password check passed!\n");
 
     // if all checks pass, return user
     return { ...output, user };
 };
 
 export const nextAuthSigninCallback = async ({ user, account, profile }) => {
+    console.log("start of nextAuthSigninCallback() function\n");
+
     // console.log("starting");
     // console.log("user:", user);
     // console.log("account:", account);
@@ -49,10 +59,12 @@ export const nextAuthSigninCallback = async ({ user, account, profile }) => {
     }
 
     // connect to MongoDB instance
+    console.log("Connecting to MongoDB from nextAuthSigninCallback() function...");
     connectMongo().catch((error) => {
         console.log(`MongoDB connection failed \n ${error}`);
         return homePage;
     });
+    console.log("Successfully connected to MongoDB!\n");
 
     // check if user exists in db
     // console.log("checking db...");
