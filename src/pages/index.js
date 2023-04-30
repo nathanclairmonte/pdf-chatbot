@@ -62,6 +62,14 @@ export default function Home({}) {
             <Navbar apiKey={apiKey} setApiKey={setApiKey} session={session} />
             <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-24">
                 <>
+                    {session && (
+                        <div className="-mt-12 mb-5 flex flex-wrap gap-2 text-lg">
+                            <p className="text-zinc-300">Signed in as: </p>
+                            <p className="text-[#eb9722]">
+                                {session.user.name} ({session.user.email})
+                            </p>
+                        </div>
+                    )}
                     <PDFInput setDocs={setDocs} setMessages={setMessages} session={session} />
                     <MessagesList
                         messages={messages}
