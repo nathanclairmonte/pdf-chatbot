@@ -19,7 +19,9 @@ export const signinUser = async (userInputEmail, userInputPassword) => {
     // ensure user exists
     console.log(`Searching for user with email ${userInputEmail}...`);
     const user = await Users.findOne({ email: userInputEmail });
+    console.log("Search complete.");
     if (!user) {
+        console.log("No user found");
         // throw new Error("No user found with that email. Please sign up first!");
         output.error = "No user found with that email. Please sign up first!";
         return;
@@ -69,14 +71,18 @@ export const nextAuthSigninCallback = async ({ user, account, profile }) => {
     // check if user exists in db
     // console.log("checking db...");
     try {
+        console.log(`Searching for user with email ${user.email}...`);
         const dbUser = await Users.findOne({ email: user.email });
+        console.log("Search complete.");
 
         if (dbUser) {
             // if user exists in db, return true if they are authorized to sign in, otherwise redirect to unauthorizedPage
             // (regardless of whether the provider is credentials or oauth)
             // console.log("found user");
+            console.log("User found!");
             return dbUser.authorized && dbUser.authorized === true ? true : unauthorizedPage;
         } else {
+            console.log("No user found.");
             // console.log("no existing user found");
             // if user doesn't exist in db, check provider type.
             // (NB: might have to update if we add another oauth provider. {user.name} might be called something else.)
