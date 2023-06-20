@@ -36,7 +36,7 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
 
         // make sure a PDF is loaded before sending query to backend
         if (docs.length === 0) {
-            errorHandler('Please load a PDF first. You need to click the "Load" button.');
+            errorHandler('Please load a PDF first. You need to click the "Load PDF" button.');
             return;
         }
 
