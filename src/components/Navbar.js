@@ -10,8 +10,9 @@ const Navbar = ({ apiKey, setApiKey, session }) => {
                 </Link>
                 <input
                     autoFocus={false}
+                    autoComplete="off"
                     rows={1}
-                    type="password"
+                    type="text"
                     id="apiKey"
                     name="apiKey"
                     placeholder="Enter your OpenAI API key here"
