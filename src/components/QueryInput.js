@@ -34,6 +34,12 @@ const QueryInput = ({ loading, queryInputRef, history, docs, apiKey, setLoading,
         setQuery("");
         setMessages((prevMessages) => [...prevMessages, { text: query, type: "query" }]);
 
+        // make sure a PDF is loaded before sending query to backend
+        if (docs.length === 0) {
+            errorHandler('Please load a PDF first. You need to click the "Load" button.');
+            return;
+        }
+
         // send query to backend API route
         const response = await fetch("api/query", {
             method: "POST",
